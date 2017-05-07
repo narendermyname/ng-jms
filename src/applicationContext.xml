@@ -23,7 +23,7 @@
 	</bean>
 
 	<bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="jmsExample" />
+		<constructor-arg value="dest" />
 	</bean>
 
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
@@ -32,6 +32,15 @@
 	</bean>
 	
 	<bean id="apifactory" class="com.naren.factory.APIFActory"></bean>
+	
+	<bean id = "msgListener" class = "com.naren.listner.ActiveAMQListener"/>
+	
+	<bean class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+        <property name="connectionFactory" ref="pooledJmsConnectionFactory" />
+        <property name="destinationName" value="dest" />
+        <property name="messageListener" ref="msgListener" />
+    </bean>
+	
 	
 	<context:component-scan base-package="com.naren" annotation-config="true" />
 
